@@ -1,19 +1,12 @@
 const
     gulp         = require('gulp'),
     postCSS      = require('gulp-postcss'),
-      
-    preCSS       = require('precss'),
-    autoprefixer = require('autoprefixer'),
-    math         = require('postcss-calc');
+
+    plugins = ['precss', 'postcss-calc', 'autoprefixer'].map(plugin => require(plugin));
 
 gulp.task('css', function () {
-    console.log('---> Filtering CSS file...');
     return gulp.src('./app/assets/css/styles.css')
-        .pipe(postCSS([
-            preCSS,
-            math,
-            autoprefixer
-        ]))
+        .pipe(postCSS(plugins))
         .on('error', function (err) {
             console.log('There seems to be an error with your CSS.');
             console.log(err.toString());
